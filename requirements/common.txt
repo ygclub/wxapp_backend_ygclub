@@ -1,0 +1,10 @@
+nose
+semver
+PyYAML
+pyCLI
+
+uwsgi
+Flask
+redis
+
+gaiabase
