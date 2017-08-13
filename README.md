@@ -7,7 +7,7 @@ This is the backend program for LEAD weixin application
 How to start service
 --------------------
 ```
-cd install gaia-template-backend 
+first :install gaia-template-backend 
 cd bin
 . dev
 quit
