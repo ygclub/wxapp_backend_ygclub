@@ -101,7 +101,47 @@ def leadmap(lonlat):
 		item = {"name":x["name"],"address":x["address"],"image":x["image"],"distance":-1,"location":x["location"],"gather_location":x["gather_location"],"course":x["course"],"class_weekday":x["class_weekday"],"class_time":x["class_time"],"period":x["period"]}
 		map_items.append(item)
 	return response
-	
+
+@route('/v1/query_class_schedule',methods=['POST'])
+@api
+def query_class_schedule():
+	logger.debug("get class schedule")
+	req_form = request.form
+	school_param = req_form["school"]
+	course_param = req_form["course"]
+	keyword = req_form["keyword"]
+	sort = req_form["sort"]
+		
+	db = mongo_client.lead
+	class_schedule = db.class_schedule
+	items = []
+	result = {"schedule":items}
+	response = {"status":"ok","result":result}
+	dbres = class_schedule.find()
+	for x in dbres:
+		if school_param != "all" and x["school"] != school_param:
+			continue
+		if course_param != "all" and x["name"] != course_param:
+			continue
+		if keyword != "none":
+			if keyword in x["name"] or keyword in x["school"] or keyword in x["semester"]:
+				time_local = time.localtime(x["class_time"])
+				endTime_local = time.localtime(x["class_time"]+3600*2)
+				class_date = time.strftime("%Y-%m-%d",time_local)
+				class_time = time.strftime("%H:%M",time_local)
+				classEnd_time = time.strftime("%H:%M",endTime_local)
+				item = {"school":x["school"],"course":x["name"],"image":x["image"],"teacher":x["teacher"],"semester":x["semester"],"class_number":x["class_number"],"teacher":x["teacher"],"date":class_date,"timerange":class_time+"-"+classEnd_time,"period":2}
+				items.append(item)
+		else:
+			time_local = time.localtime(x["class_time"])
+			endTime_local = time.localtime(x["class_time"]+3600*2)
+			class_date = time.strftime("%Y-%m-%d",time_local)
+			class_time = time.strftime("%H:%M",time_local)
+			classEnd_time = time.strftime("%H:%M",endTime_local)
+			item = {"school":x["school"],"course":x["name"],"image":x["image"],"teacher":x["teacher"],"semester":x["semester"],"class_number":x["class_number"],"teacher":x["teacher"],"date":class_date,"timerange":class_time+"-"+classEnd_time,"period":2}
+			items.append(item)
+	return response
+				
 def main():
 	application.debug = True
 	application.run()
