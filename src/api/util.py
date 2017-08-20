@@ -12,7 +12,6 @@ def api(func):
         try:
             value = func(*args, **kwargs)
         except BaseException as e:
-            sentry.captureException()
             value = {
                 "status": "failed",
                 "error": "Unkonwn error!"
