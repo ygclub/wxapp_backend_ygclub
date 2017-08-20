@@ -2,9 +2,13 @@ nose
 semver
 PyYAML
 pyCLI
+raven[flask]==5.32.0
 
 uwsgi
 Flask
 redis
-
+pymongo
 gaiabase
+requests
+-e git+git@github.com:caiyunapp/caiyun-common.git@v0.2.5#egg=caiyun
+
