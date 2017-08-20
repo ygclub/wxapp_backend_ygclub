@@ -33,7 +33,7 @@ db.school.insert({"name":"定福小学","address":"昌平区定福黄庄","image
 db.class_schedule.remove({})
 for(i = 1;i <= 10; i++){
 var time = 1505525400 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"语文","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"三足乌","image":"/image/class_schedule/yuwen.jpg"})
+db.class_schedule.insert({"name":"语文","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"三足乌","image":"/img/class_schedule/yuwen.jpg"})
 }
 //db.dict.remove({})
 //db.dict.insert({code:"0",name:"未知的性别"})
