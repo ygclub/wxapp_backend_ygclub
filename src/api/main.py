@@ -86,6 +86,22 @@ def get_course():
 		item = {"name":x["name"]}
 		course_items.append(item)
 	return response
+
+@route('/v1/<string:lonlat>/leadmap')
+@api
+def leadmap(lonlat):
+	logger.debug("leadmap api")
+	db = mongo_client.lead
+	school = db.school
+	map_items = []
+	result = {"school":map_items}
+	response = {"status":"ok","result":result}
+	dbres = school.find()
+	for x in dbres:
+		item = {"name":x["name"],"address":x["address"],"image":x["image"],"distance":-1,"location":x["location"],"gather_location":x["gather_location"],"course":x["course"],"class_weekday":x["class_weekday"],"class_time":x["class_time"],"period":x["period"]}
+		map_items.append(item)
+	return response
+	
 def main():
 	application.debug = True
 	application.run()
