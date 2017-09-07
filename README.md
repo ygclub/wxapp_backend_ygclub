@@ -7,7 +7,8 @@ This is the backend program for LEAD weixin application
 How to start service
 --------------------
 ```
-first :install gaia-template-backend 
+first :install gaia-template-backend  
+sudo curl --silent https://raw.githubusercontent.com/caiyunapp/gaia-toolkit/master/bin/g | bash
 cd bin
 . dev
 quit
