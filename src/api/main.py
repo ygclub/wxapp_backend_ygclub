@@ -34,7 +34,7 @@ def get_banner():
         banners = []
 	result = {"banner":banners}
 	response = {"status":"ok","result":result}
-	dbresults = banner.find();
+	dbresults = banner.find().sort("seq",1);
 	for x in dbresults:
 		item = {"image":x["image"],"link":x["link"]}
 		banners.append(item)
@@ -141,6 +141,20 @@ def query_class_schedule():
 			item = {"school":x["school"],"course":x["name"],"image":x["image"],"teacher":x["teacher"],"semester":x["semester"],"class_number":x["class_number"],"teacher":x["teacher"],"date":class_date,"timerange":class_time+"-"+classEnd_time,"period":2}
 			items.append(item)
 	return response
+
+
+@route('/v1/regist',methods=['POST'])
+@api
+def regist():
+	logger.debug("regist")
+        req_form = request.form
+        uid = req_form["uid"]
+        nickname = req_form["nickname"]
+
+        db = mongo_client.user
+        user = db.user
+	user.update({"uid":uid,"nickname":nickname})
+	return {"status":"ok"}
 				
 def main():
 	application.debug = True
