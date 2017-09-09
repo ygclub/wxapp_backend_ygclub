@@ -52,7 +52,7 @@ def get_news():
 	response = {"status":"ok","result":result}
 	dbresults = news.find({"status":1})
 	for x in dbresults:
-		item = {"content":x["content"],"link":x["link"]}
+		item = {"type":x["type"],"content":x["content"],"link":x["link"]}
 		news_items.append(item)
 	return response
 	
@@ -98,7 +98,9 @@ def leadmap(lonlat):
 	response = {"status":"ok","result":result}
 	dbres = school.find()
 	for x in dbres:
-		item = {"name":x["name"],"address":x["address"],"image":x["image"],"distance":-1,"location":x["location"],"gather_location":x["gather_location"],"course":x["course"],"class_weekday":x["class_weekday"],"class_time":x["class_time"],"period":x["period"]}
+                timeHour = int(x["class_time"].split(":")[0])+2
+                classEnd_time = str(timeHour)+":"+x["class_time"].split(":")[1]
+		item = {"name":x["name"],"address":x["address"],"contactor":x["contactor"],"phone":x["phone"],"image":x["image"],"distance":-1,"location":x["location"],"gather_location":x["gather_location"],"course":x["course"],"class_weekday":x["class_weekday"],"class_time":x["class_time"]+"-"+classEnd_time,"period":x["period"]}
 		map_items.append(item)
 	return response
 

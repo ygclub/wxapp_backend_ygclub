@@ -10,8 +10,8 @@ db.banner.insert({"name":"项目地图","image":imageDomain+"/img/banner/newclas
 
 //init lead news
 db.news.remove({})
-db.news.insert({"content":"2017年秋季学期将于9月16日正式开学","link":"none","status":1})
-db.news.insert({"content":"阳光小程序正式上线：）","link":"none","status":1})
+db.news.insert({"type":"重要通知","content":"2017年秋季学期将于9月16日正式开学","link":"none","status":1})
+db.news.insert({"type":"阳光快报","content":"阳光小程序正式上线：）","link":"none","status":1})
 
 
 //init course
@@ -30,8 +30,8 @@ db.course.insert({"name":"表演"})
 
 //init project
 db.school.remove({})
-db.school.insert({"name":"定福小学","address":"昌平区定福黄庄","image":imageDomain+"/img/school/dingfu.jpg","location":"116.267228,40.106039","gather_location":"116.293844,40.094891","course":"计算机、绘本、英语、舞蹈、足球","class_weekday":"周日","class_time":"9:30","period":2})
-db.school.insert({"name":"朱房村社区","address":"海淀区清河朱房村","image":imageDomain+"/img/school/dingfu.jpg","location":"116.330485,40.028045","gather_location":"116.320193,40.033007","course":"趣味经济、围棋","class_weekday":"周六","class_time":"14:30","period":2})
+db.school.insert({"name":"定福小学","address":"昌平区定福黄庄","contactor":"凡杰","phone":"15222757129","image":imageDomain+"/img/school/dingfu.jpg","location":"116.267228,40.106039","gather_location":"116.293844,40.094891","course":"计算机、绘本、英语、舞蹈、足球","class_weekday":"周日","class_time":"9:30","period":2})
+db.school.insert({"name":"朱房村社区","address":"海淀区清河朱房村","contactor":"keyball","phone":"17701367266","image":imageDomain+"/img/school/dingfu.jpg","location":"116.330485,40.028045","gather_location":"116.320193,40.033007","course":"趣味经济、围棋","class_weekday":"周六","class_time":"14:30","period":2})
 
 //init class schedule
 db.class_schedule.remove({})
