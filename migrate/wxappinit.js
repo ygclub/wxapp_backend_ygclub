@@ -82,7 +82,7 @@ db.class_schedule.insert({"name":"趣味主题","school":"费家村社区","seme
 //金盏
 for(i = 1;i <= 10; i++){
 var time = 1506146400 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"魔力数学","school":"金盏社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/shuxue.jpg"})
+db.class_schedule.insert({"name":"魔法数学","school":"金盏社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/shuxue.jpg"})
 }
 
 //init tigang
