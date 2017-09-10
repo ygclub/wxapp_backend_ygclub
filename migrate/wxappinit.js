@@ -45,17 +45,17 @@ db.class_schedule.remove({})
 //定福小学
 for(i = 1;i <= 10; i++){
 var time = 1505525400 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"语文","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwen.jpg"})
+db.class_schedule.insert({"name":"语文","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
 db.class_schedule.insert({"name":"舞蹈","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/wudao.jpg"})
 db.class_schedule.insert({"name":"计算机","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/jisuanji.jpg"})
 db.class_schedule.insert({"name":"足球","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/zuqiu.jpg"})
-db.class_schedule.insert({"name":"绘本","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwen.jpg"})
+db.class_schedule.insert({"name":"绘本","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
 }
 
 //西店
 for(i = 1;i <= 10; i++){
 var time = 1508549400 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"魔法阅读","school":"西店社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwen.jpg"})
+db.class_schedule.insert({"name":"魔法阅读","school":"西店社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
 }
 
 //朱房村
