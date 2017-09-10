@@ -157,7 +157,7 @@ def query_class_detail():
         db = mongo_client.lead
         class_schedule = db.class_schedule
         schedule = {}
-        plan = {}
+        plan = {"content":""}
         result = {"class":schedule,"plan":plan}
         response = {"status":"ok","result":result}
         logger.debug(school+" - " + class_name + " - " +class_number + " - " + semester)
