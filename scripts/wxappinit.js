@@ -39,6 +39,11 @@ for(i = 1;i <= 10; i++){
 var time = 1505525400 + ( i -1 )* 24 * 3600 * 7  
 db.class_schedule.insert({"name":"语文","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"三足乌","image":imageDomain+"/img/class_schedule/yuwen.jpg"})
 }
+
+//init tigang
+db.class_plan.remove({})
+db.class_plan.insert({"semester":"2017年秋季学期","school":"定福小学","name":"语文","class_number":1,"content":"本周绘本主讲星星樱老师。<br> 绘本故事《遮月亮的人》<br>绘本故事http://pan.baidu.com/s/1i5OKaUT <br>教案初稿http://t.cn/RaEUzlj"})
+
 //db.dict.remove({})
 //db.dict.insert({code:"0",name:"未知的性别"})
 //db.dict.insert({code:"1",name:"男"})

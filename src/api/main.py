@@ -145,6 +145,46 @@ def query_class_schedule():
 	return response
 
 
+@route('/v1/query_class_detail',methods=['POST'])
+@api
+def query_class_detail():
+	logger.debug("query class detail")
+	req_form = request.form
+        school = req_form["school"]
+        class_name = req_form["class_name"]
+        class_number = req_form["class_number"]
+        semester = req_form["semester"]
+        db = mongo_client.lead
+        class_schedule = db.class_schedule
+        schedule = {}
+        plan = {}
+        result = {"class":schedule,"plan":plan}
+        response = {"status":"ok","result":result}
+        logger.debug(school+" - " + class_name + " - " +class_number + " - " + semester)
+        dbres = class_schedule.find({"school":school,"semester":semester,"name":class_name,"class_number":int(class_number)})
+        for x in dbres:
+                logger.debug("find:"+x["name"])
+		time_local = time.localtime(x["class_time"])
+		endTime_local = time.localtime(x["class_time"]+3600*2)
+		class_date = time.strftime("%Y-%m-%d",time_local)
+		class_time = time.strftime("%H:%M",time_local)
+		classEnd_time = time.strftime("%H:%M",endTime_local)
+                schedule["school"] = x["school"]
+                schedule["course"] = x["name"]
+                schedule["image"] = x["image"]
+                schedule["teacher"] = x["teacher"]
+                schedule["semester"] = x["semester"]
+                schedule["class_number"] = x["class_number"]
+                schedule["date"] = class_date
+                schedule["timerange"] = class_time+"-"+classEnd_time
+                schedule["period"] = 2
+	class_plan = db.class_plan 
+        dbres = class_plan.find({"school":school,"semester":semester,"name":class_name,"class_number":int(class_number)})
+        for y in dbres:
+	 	 plan["content"] = y["content"]
+        return response
+
+
 @route('/v1/regist',methods=['POST'])
 @api
 def regist():
