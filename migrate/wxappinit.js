@@ -4,7 +4,7 @@ var imageDomain = "https://squirrelrao.com"
 //init index page banners
 db.banner.remove({})
 db.banner.insert({"name":"课程表","image":imageDomain+"/img/banner/kechengbiao.jpg","link":"../../pages/schedule/schedule","seq":3})
-db.banner.insert({"name":"欢迎使用","image":imageDomain+"/img/banner/welcome.jpg","link":"home","seq":1})
+db.banner.insert({"name":"欢迎使用","image":imageDomain+"/img/banner/welcome_use.jpg","link":"home","seq":1})
 db.banner.insert({"name":"项目地图","image":imageDomain+"/img/banner/newclass.jpg","link":"../../pages/coordinate/coordinate","seq":2})
 
 
