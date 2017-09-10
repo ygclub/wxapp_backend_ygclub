@@ -44,24 +44,24 @@ db.school.insert({"name":"金盏社区","address":"朝阳区金盏乡","contacto
 db.class_schedule.remove({})
 //定福小学
 for(i = 1;i <= 10; i++){
-var time = 1505525400 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"语文","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
-db.class_schedule.insert({"name":"舞蹈","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/wudao.jpg"})
-db.class_schedule.insert({"name":"计算机","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/jisuanji.jpg"})
-db.class_schedule.insert({"name":"足球","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/zuqiu.jpg"})
-db.class_schedule.insert({"name":"绘本","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
+var time = 1505611800 + ( i -1 )* 24 * 3600 * 7  
+db.class_schedule.insert({"name":"语文","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
+db.class_schedule.insert({"name":"舞蹈","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/wudao.jpg"})
+db.class_schedule.insert({"name":"计算机","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/jisuanji.jpg"})
+db.class_schedule.insert({"name":"足球","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/zuqiu.jpg"})
+db.class_schedule.insert({"name":"绘本","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
 }
 
 //西店
 for(i = 1;i <= 10; i++){
 var time = 1508549400 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"魔法阅读","school":"西店社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
+db.class_schedule.insert({"name":"魔法阅读","school":"西店社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/yuwenke.jpg"})
 }
 
 //朱房村
 for(i = 1;i <= 10; i++){
 var time = 1508565600 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"围棋","school":"朱房村社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/weiqi.jpg"})
+db.class_schedule.insert({"name":"围棋","school":"朱房村社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/weiqi.jpg"})
 }
 
 
@@ -69,20 +69,20 @@ db.class_schedule.insert({"name":"围棋","school":"朱房村社区","semester":
 //新世纪
 for(i = 1;i <= 10; i++){
 var time = 1507960800 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"英语","school":"新世纪图书馆","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/yingyu.jpg"})
+db.class_schedule.insert({"name":"英语","school":"新世纪图书馆","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/yingyu.jpg"})
 }
 
 //费家村
 for(i = 1;i <= 10; i++){
 var time = 1505547000 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"趣味主题","school":"费家村社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/xingqu.jpg"})
+db.class_schedule.insert({"name":"趣味主题","school":"费家村社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/xingqu.jpg"})
 }
 
 
 //金盏
 for(i = 1;i <= 10; i++){
 var time = 1506146400 + ( i -1 )* 24 * 3600 * 7  
-db.class_schedule.insert({"name":"魔法数学","school":"金盏社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"-","image":imageDomain+"/img/class_schedule/shuxue.jpg"})
+db.class_schedule.insert({"name":"魔法数学","school":"金盏社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/shuxue.jpg"})
 }
 
 //init tigang

@@ -119,7 +119,14 @@ def query_class_schedule():
 	items = []
 	result = {"schedule":items}
 	response = {"status":"ok","result":result}
-	dbres = class_schedule.find()
+        if sort == "1":
+		 dbres = class_schedule.find().sort([("name",1),("class_time",1)])
+        elif sort == "2":
+		dbres = class_schedule.find().sort([("school",1),("class_time",1)])
+	elif sort == "3":
+		dbres = class_schedule.find().sort("class_time",1)
+	else:
+		dbres = class_schedule.find().sort([("class_time",1),("school",1),("name",1)])
 	for x in dbres:
 		if school_param != "all" and x["school"] != school_param:
 			continue
