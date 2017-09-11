@@ -200,9 +200,9 @@ def regist():
         uid = req_form["uid"]
         nickname = req_form["nickname"]
 
-        db = mongo_client.user
+        db = mongo_client.lead
         user = db.user
-	user.update({"uid":uid,"nickname":nickname})
+        user.update({"nickname":nickname},{"$set":{"uid":uid,"nickname":nickname,"time":time.time()}},upsert=True)
 	return {"status":"ok"}
 				
 def main():
