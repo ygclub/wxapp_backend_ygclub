@@ -84,6 +84,4 @@ db.class_schedule.insert({"name":"魔法数学","school":"金盏社区","semeste
 
 //init tigang
 db.class_plan.remove({})
-db.class_plan.insert({"semester":"2017年秋季学期","school":"定福小学","name":"绘本","class_number":1,"content":"<p>绘本故事课两个班的话<br>大班蓝雪主讲《这片草地真美丽》<br>小班青阳主讲《我们发现了一顶帽子》<br>一个班的话，蓝雪主讲《这片草地真美丽》</p>"})
-db.class_plan.insert({"semester":"2017年秋季学期","school":"定福小学","name":"足球","class_number":1,"content":"<p>第一节课<br>介绍足球课<br>介绍足球队的约定及保险相关事宜<br>热身准备活动<br>讲解带球-单脚直线<br>带球练习<br>讲解带球-单脚直线加转弯<br>带球练习 <br><br>第二节课<br>讲解停球<br>停球练习讲解传球（短传）<br>短传 + 停球 1对1练习<br>队内连续赛<br>课程总结"})
-db.class_plan.insert({"semester":"2017年秋季学期","school":"费家村社区","name":"趣味主题","class_number":1,"content":"<p>课程为绘本故事、艺术创作、科学实验、财商养成<br>等多主题综合课程<br>教学目的是保持与激发孩子们的想象力，玩中学，学中乐<br></p>"})
+// db.class_plan.insert({"semester":"2017年秋季学期","school":"定福小学","name":"语文","class_number":1,"content":"<p><br> 绘本故事《遮月亮的人》<br>绘本故事http://pan.baidu.com/s/1i5OKaUT <br>教案初稿http://t.cn/RaEUzlj</p>"})
