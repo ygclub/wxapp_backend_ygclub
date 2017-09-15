@@ -65,7 +65,7 @@ db.class_schedule.insert({"name":"围棋","school":"朱房村社区","semester":
 
 //新世纪
 for(i = 1;i <= 10; i++){
-var time = 1507960800 + ( i -1 )* 24 * 3600 * 7  
+var time = 1507962600 + ( i -1 )* 24 * 3600 * 7  
 db.class_schedule.insert({"name":"英语","school":"新世纪图书馆","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/yingyu2.jpg"})
 }
 
@@ -84,6 +84,6 @@ db.class_schedule.insert({"name":"魔法数学","school":"金盏社区","semeste
 
 //init tigang
 db.class_plan.remove({})
-db.class_plan.insert({"semester":"2017年秋季学期","school":"定福小学","name":"绘本","class_number":1,"content":"<p>绘本故事课两个班的话<br>大班蓝雪主讲《这片草地真美丽》<br>小班青阳主讲《我们发现了一顶帽子》<br>一个班的话，蓝雪主讲《这片草地真美丽》</p>"})
+db.class_plan.insert({"semester":"2017年秋季学期","school":"定福小学","name":"绘本","class_number":1,"content":"<p>1宣布三项要求：1三次扰乱离开教室；2举手提问；3大声洪亮<br>2开始绘本：观察图片，列出提纲，集体朗读，分角色朗读<br>3中间穿插一个发散思维问题：六只火柴排出4个等边三角形。引导出三维空间的概念。<br>4复述课文。讲述类似的身边经历。<br>5看电影，鼹鼠的故事，伴你高飞，推荐小朋友自己观看，猜想视频的内容。<br>6环保小卫士，超能力，保护环境梦想绘画，下节课回顾可用。最深感想一句话。最佳表现学生，奖品。</p>"})
 db.class_plan.insert({"semester":"2017年秋季学期","school":"定福小学","name":"足球","class_number":1,"content":"<p>第一节课<br>介绍足球课<br>介绍足球队的约定及保险相关事宜<br>热身准备活动<br>讲解带球-单脚直线<br>带球练习<br>讲解带球-单脚直线加转弯<br>带球练习 <br><br>第二节课<br>讲解停球<br>停球练习讲解传球（短传）<br>短传 + 停球 1对1练习<br>队内连续赛<br>课程总结"})
 db.class_plan.insert({"semester":"2017年秋季学期","school":"费家村社区","name":"趣味主题","class_number":1,"content":"<p>课程为绘本故事、艺术创作、科学实验、财商养成<br>等多主题综合课程<br>教学目的是保持与激发孩子们的想象力，玩中学，学中乐<br></p>"})
