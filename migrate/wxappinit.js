@@ -40,7 +40,10 @@ db.school.insert({"name":"新人培训林科院专场","address":"中国林业�
 db.class_schedule.remove({})
 //定福小学
 for(i = 1;i <= 10; i++){
-var time = 1505611800 + ( i -1 )* 24 * 3600 * 7  
+var time = 1505611800 + ( i -1 )* 24 * 3600 * 7
+if(i >=3){
+  time = 1505611800 + ( i -1 +2)* 24 * 3600 * 7
+}
 db.class_schedule.insert({"name":"英语","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/yingyu2.jpg"})
 db.class_schedule.insert({"name":"舞蹈","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/wudao2.jpg"})
 db.class_schedule.insert({"name":"计算机","school":"定福小学","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/jisuanji2.jpg"})
@@ -70,7 +73,10 @@ db.class_schedule.insert({"name":"英语","school":"新世纪图书馆","semeste
 
 //费家村
 for(i = 1;i <= 10; i++){
-var time = 1505547000 + ( i -1 )* 24 * 3600 * 7  
+var time = 1505547000+ ( i -1 )* 24 * 3600 * 7
+if(i >=3){
+  time = 1505547000 + ( i -1 +2)* 24 * 3600 * 7
+}
 db.class_schedule.insert({"name":"趣味主题","school":"费家村社区","semester":"2017年秋季学期","class_number":i,"class_time":time,"teacher":"","image":imageDomain+"/img/class_schedule/xingqu2.jpg"})
 }
 
