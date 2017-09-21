@@ -96,7 +96,7 @@ def leadmap(lonlat):
 	map_items = []
 	result = {"school":map_items}
 	response = {"status":"ok","result":result}
-	dbres = school.find()
+	dbres = school.find().sort("priority",1)
 	for x in dbres:
                 timeHour = int(x["class_time"].split(":")[0])+2
                 classEnd_time = str(timeHour)+":"+x["class_time"].split(":")[1]
