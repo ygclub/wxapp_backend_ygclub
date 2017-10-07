@@ -10,8 +10,9 @@ db.banner.insert({"name":"项目地图","image":imageDomain+"/img/banner/newclas
 
 //init lead news
 db.news.remove({})
-db.news.insert({"type":"阳光快报","content":"9月24日林科院新人培训信息在阳光地图可查询","link":"none","status":1})
-// db.news.insert({"type":"阳光快报","content":"阳光小程序正式上线：）","link":"none","status":1})
+//db.news.insert({"type":"阳光快报","content":"9月24日新人培训信息在阳光地图可查询","link":"none","status":1})
+//db.news.insert({"type":"阳光快报","content":"祝大家国庆中秋快乐~~~","link":"none","status":1})
+//db.news.insert({"type":"课堂通知","content":"阳光课堂10月14日复课","link":"none","status":1})
 
 
 //init course
@@ -34,7 +35,6 @@ db.school.insert({"name":"费家村社区","address":"朝阳区崔各庄","conta
 db.school.insert({"name":"西店社区","address":"昌平区定福黄庄","contactor":"小塔","phone":"15810331634","image":imageDomain+"/img/school/xidian.jpg","location":"116.275796,40.110334","gather_location":"116.293844,40.094891","course":"魔法阅读","class_weekday":"周六","class_time":"9:30","period":2,"priority":1})
 db.school.insert({"name":"新世纪图书馆","address":"海淀区上地","contactor":"刘新宇","phone":"18511801329","image":imageDomain+"/img/school/xinsiji.jpg","location":"116.328107,40.028392","gather_location":"116.320193,40.033007","course":"英语","class_weekday":"周六","class_time":"14:30","period":2,"priority":1})
 db.school.insert({"name":"金盏社区","address":"朝阳区金盏乡","contactor":"歪果仁","phone":"15811285843","image":imageDomain+"/img/school/jinzhan.jpg","location":"116.568902,40.003503","gather_location":"116.568902,40.003503","course":"魔法数学","class_weekday":"周六","class_time":"14:00","period":2,"priority":2})
-db.school.insert({"name":"新人培训林科院专场","address":"中国林业科学研究院","contactor":"凡杰","phone":"15222757129","image":imageDomain+"/img/school/dingfu.jpg","location":"116.248,40.00451","gather_location":"116.249962,40.00399","course":"新人培训","class_weekday":"9月24日周日","class_time":"14:30","period":3,"priority":0})
 
 //init class schedule
 db.class_schedule.remove({})
