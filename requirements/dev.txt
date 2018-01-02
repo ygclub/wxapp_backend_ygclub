@@ -4,3 +4,5 @@ ipython
 coverage
 pylint
 profilehooks
+Flask-MySQL
+PyMySQL
