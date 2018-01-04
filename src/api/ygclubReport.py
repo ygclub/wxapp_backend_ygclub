@@ -68,12 +68,15 @@ def get_ygclub_act_data(uid):
 	yghd_count = 0 #阳光活动总数
 	school_name = "" #第一次活动项目点
 	school_date = "" #第一次活动时间
+	px_date = "" #第一次培训时间
 	for item in res:
 		print u'"'+str(item[3])+" "+item[4]+" "+item[8]+" "+timestamp_to_date(item[7])+'"'
 		#get first school activity
 		if u'【活动召集】' in u''+item[8]+'' and u'阳光公益活动' in u''+item[4]+'' and school_name == "":
 			school_name = get_school_name(item[8])
 			school_date = timestamp_to_date(item[7])
+		if (u'培训活动召集' in u''+item[8]+'' and u'阳光公益活动' in u''+item[4]+'') or (u'活动召集' in u''+item[4]+'' and u'培训交流' in u''+item[4]+''):
+			px_date = timestamp_to_date(item[7])
 		yghd_count = yghd_count  + 1
 		if u''+item[4]+'' == u'阳光公益活动':
 			ygkt_count = ygkt_count + 1
@@ -94,7 +97,7 @@ def get_ygclub_act_data(uid):
 	print count_data
 	time_data = {"ygkt_hour":ygkt_hour_count,"yghd_starttime":yghd_starttime,"yghd_endtime":yghd_endtime}
 	print time_data
-	first_activity = {"school_name":school_name,"date":school_date}
+	first_activity = {"school_name":school_name,"school_date":school_date,"train_date":px_date}
 	print first_activity
 	return first_activity
 
