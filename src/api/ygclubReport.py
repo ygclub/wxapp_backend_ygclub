@@ -55,12 +55,55 @@ def get_ygclub_act_data(uid):
 	sql = sql +"AND pe.uid = '"+str(uid)+"' "
 	sql = sql +"AND pe.verified = 4 "
 	sql = sql +"AND t.subject NOT LIKE '%活动取消%' "
-	sql = sql +"ORDER BY p.showtime DESC"
+	sql = sql +"ORDER BY p.showtime ASC"
 	res = execute_db_query(sql)
 	print "res:"+str(len(res))
 	#print res
+	data = {}
+	ygkt_count = 0 #阳光课堂活动次数
+	yglh_count = 0 #阳光例会次数
+	ygpx_count = 0 #阳光培训次数
+	ygxx_count = 0 #阳光休闲活动次数
+	ygwb_count = 0 #其它外部活动次数
+	yghd_count = 0 #阳光活动总数
+	school_name = "" #第一次活动项目点
+	school_date = "" #第一次活动时间
 	for item in res:
 		print u'"'+str(item[3])+" "+item[4]+" "+item[8]+" "+timestamp_to_date(item[7])+'"'
+		#get first school activity
+		if u'【活动召集】' in u''+item[8]+'' and u'阳光公益活动' in u''+item[4]+'' and school_name == "":
+			school_name = get_school_name(item[8])
+			school_date = timestamp_to_date(item[7])
+		yghd_count = yghd_count  + 1
+		if u''+item[4]+'' == u'阳光公益活动':
+			ygkt_count = ygkt_count + 1
+		elif u''+item[4]  == u'阳光例会':
+			yglh_count = yglh_count + 1
+		elif u''+item[4]+'' == u'培训交流':
+			ygpx_count = ygpx_count + 1
+		elif u''+item[4]+'' == u'休闲活动' or u''+item[4]+'' == u'交流活动':
+			ygxx_count = ygxx_count + 1
+		elif u''+item[4]+'' == u'外部公益活动' :
+			ygwb_count = ygwb_count + 1
+	ygkt_hour_count = ygkt_count * 2
+	yghd_starttime = timestamp_to_date(res[0][7])
+	yghd_endtime = timestamp_to_date(res[len(res)-1][7])
+	kids_count = ygkt_count * 12
+	teach_plan_count = ygkt_count/2
+	count_data = {"ygkt_count":ygkt_count,"yglh_count":yglh_count,"ygpx_count":ygpx_count,"ygxx_count":ygxx_count,"ygwb_count":ygwb_count,"yghd_count":yghd_count,"kids_count":kids_count,"teach_plan_count":teach_plan_count}
+	print count_data
+	time_data = {"ygkt_hour":ygkt_hour_count,"yghd_starttime":yghd_starttime,"yghd_endtime":yghd_endtime}
+	print time_data
+	first_activity = {"school_name":school_name,"date":school_date}
+	print first_activity
+	return first_activity
+
+
+def get_school_name(data):
+	projects = ["","","","","","","","","","","","","","","","",""]
+	project = "-"
+	return project
+
 def main():
 	username = "squirrelRao"
 	user = query_user_basic_info(username)
