@@ -5,6 +5,7 @@ sys.setdefaultencoding('utf8')
 import MySQLdb
 import time
 import json
+import random
 
 SCHOOLS=['费家村','金盏社区','定福学校','新世纪图书馆','爱加倍','东坝中心','成长驿站','西店','水厂大院','怀柔育才','朱房村','经纬学校','燕京小天鹅','汇蕾学校','桃园学校','崔各庄','新公民学校','育英学校','宜民学校','文德学校','弘立学校','育才学校','农民之子图书馆','振华学校','光明学校','信心学校','木兰社区','毛菊图书馆','蓝天丰苑学校']
 
@@ -26,8 +27,8 @@ def close_connect(db):
 #query db
 def execute_db_query(sql):
 	db = open_connect()
-	print db
-	print sql
+	#print db
+	#print sql
 	res = []
 	cursor = db.cursor()
 	try:
@@ -35,7 +36,7 @@ def execute_db_query(sql):
 		results = cursor.fetchall()
 		for row in results:
 			res.append(row)
-		print "sql query res len:"+str(len(res))
+		#print "sql query res len:"+str(len(res))
 	except e:
 		print "error:"+e
 	close_connect(db)
@@ -49,12 +50,32 @@ def query_user_basic_info(username):
 		return False
 	user = {}
 	avatar = "http://www.ygclub.org/uc/avatar.php?uid="+str(res[0][0])+"&size=middle"
-	user = {"username":username,"uid":res[0][0],"email":res[0][1],"regdate":timestamp_to_date(res[0][12]),"avatar":avatar}
+	user = {"username":username,"uid":res[0][0],"email":res[0][1],"regdate":timestamp_to_date(res[0][12]),"regdate_timestamp":res[0][12],"avatar":avatar}
 	return user
 
 
+#query tong qi sheng
+def get_tongqisheng(date):
+	min_date = date - 2678400 #30天范围
+	max_date = date + 2678400
+	sql = "select username from bbs_common_member where regdate >= "+str(min_date)+" and regdate <= "+str(max_date)
+	res = execute_db_query(sql)
+	max_count = 4
+	tongqisheng = []
+	if len(res) <= 4:
+		return res
+	i = 0
+	while i < max_count:
+		position = random.randint(0,len(res)-1)
+		tongqisheng.append(res[position][0])
+		i = i + 1
+		res.remove(res[position])
+	return tongqisheng
+
 #get ygclub activity statistics
-def get_ygclub_act_data(uid):
+def get_ygclub_act_data(user):
+	print user["username"]+"的阳光公益报告"
+	uid = user["uid"]
 	sql = "SELECT pe.uid, pe.username, pe.config, pe.checkin, p.class, p.tid, p.ctid, p.showtime, t.subject, pe.usertask  FROM "
 	sql = sql +"bbs_ygclub_partyers as pe LEFT JOIN bbs_ygclub_party as p on pe.tid = p.tid "
 	sql = sql +"LEFT JOIN bbs_forum_thread as t on p.tid = t.tid where 1 "
@@ -63,7 +84,7 @@ def get_ygclub_act_data(uid):
 	sql = sql +"AND t.subject NOT LIKE '%活动取消%' "
 	sql = sql +"ORDER BY p.showtime ASC"
 	res = execute_db_query(sql)
-	print "res:"+str(len(res))
+	#print "res:"+str(len(res))
 	#print res
 	data = {}
 	ygkt_count = 0 #阳光课堂活动次数
@@ -80,7 +101,7 @@ def get_ygclub_act_data(uid):
 	first_zhujiang_date = ""
 	first_zhujiang_school = ""
 	for item in res:
-		print u'"'+str(item[3])+" "+item[4]+" "+item[8]+" "+timestamp_to_date(item[7])+'"'
+		#print u'"'+str(item[3])+" "+item[4]+" "+item[8]+" "+timestamp_to_date(item[7])+'"'
 		#get first school activity
 		if u'主讲' in u''+item[9]+'':
 			if first_zhujiang_date == "":
@@ -124,7 +145,11 @@ def get_ygclub_act_data(uid):
 	print json.dumps(serice_school_info, encoding="UTF-8", ensure_ascii=False)
 	zhujiang_info = {"first_zhujiang_date":first_zhujiang_date,"first_zhujiang_school":first_zhujiang_school,"zhujiang_count":zhujiang_count,"jiaoan_count":jiaoan_count}
 	print json.dumps(zhujiang_info, encoding="UTF-8", ensure_ascii=False)
+	tongqisheng = get_tongqisheng(user['regdate_timestamp'])
+	tongqisheng_info = {"tongqisheng":tongqisheng}
+	print json.dumps(tongqisheng_info, encoding="UTF-8", ensure_ascii=False)
 	return infos
+
 
 def get_school_name(data):
 	project = ""
@@ -134,12 +159,12 @@ def get_school_name(data):
 	return project
 
 def main():
-	username = "squirrelRao"
+	username = "wycjw1990"
 	user = query_user_basic_info(username)
 	if user == False:
 		print "no user find by "+username
 		return
-	acts = get_ygclub_act_data(user["uid"])
+	acts = get_ygclub_act_data(user)
 
 
 main()
