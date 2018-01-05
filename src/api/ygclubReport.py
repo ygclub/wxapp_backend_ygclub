@@ -1,6 +1,12 @@
-# -*- coding: utf-8 -*-  
+# -*- coding: utf-8 -*- 
+import sys 
+reload(sys) 
+sys.setdefaultencoding('utf8') 
 import MySQLdb
 import time
+import json
+
+SCHOOLS=['费家村','金盏社区','定福学校','新世纪图书馆','爱加倍','东坝中心','成长驿站','西店','水厂大院','怀柔育才','朱房村','经纬学校','燕京小天鹅','汇蕾学校','桃园学校','崔各庄','新公民学校','育英学校','宜民学校','文德学校','弘立学校','育才学校','农民之子图书馆','振华学校','光明学校','信心学校','木兰社区','毛菊图书馆','蓝天丰苑学校']
 
 #timestamp to time
 def timestamp_to_date(timestamp):
@@ -69,17 +75,22 @@ def get_ygclub_act_data(uid):
 	school_name = "" #第一次活动项目点
 	school_date = "" #第一次活动时间
 	px_date = "" #第一次培训时间
+	service_schools = []
 	for item in res:
 		print u'"'+str(item[3])+" "+item[4]+" "+item[8]+" "+timestamp_to_date(item[7])+'"'
 		#get first school activity
 		if u'【活动召集】' in u''+item[8]+'' and u'阳光公益活动' in u''+item[4]+'' and school_name == "":
-			school_name = get_school_name(item[8])
+			school_name = u''+get_school_name(item[8])+''
 			school_date = timestamp_to_date(item[7])
+			service_schools.append(school_name)
 		if (u'培训活动召集' in u''+item[8]+'' and u'阳光公益活动' in u''+item[4]+'') or (u'活动召集' in u''+item[4]+'' and u'培训交流' in u''+item[4]+''):
 			px_date = timestamp_to_date(item[7])
 		yghd_count = yghd_count  + 1
 		if u''+item[4]+'' == u'阳光公益活动':
 			ygkt_count = ygkt_count + 1
+			service_school_name = u''+get_school_name(item[8])+''
+			if service_school_name not in service_schools and service_school_name != "":
+				service_schools.append(service_school_name)
 		elif u''+item[4]  == u'阳光例会':
 			yglh_count = yglh_count + 1
 		elif u''+item[4]+'' == u'培训交流':
@@ -98,13 +109,17 @@ def get_ygclub_act_data(uid):
 	time_data = {"ygkt_hour":ygkt_hour_count,"yghd_starttime":yghd_starttime,"yghd_endtime":yghd_endtime}
 	print time_data
 	first_activity = {"school_name":school_name,"school_date":school_date,"train_date":px_date}
-	print first_activity
+	print json.dumps(first_activity, encoding="UTF-8", ensure_ascii=False)
+	serice_school_info = {"school_count":len(service_schools),"school_list":service_schools}
+	print json.dumps(serice_school_info, encoding="UTF-8", ensure_ascii=False)
 	return first_activity
 
 
 def get_school_name(data):
-	projects = ["","","","","","","","","","","","","","","","",""]
-	project = "-"
+	project = ""
+	for item in SCHOOLS:
+		if u''+item+'' in data:
+			project = item
 	return project
 
 def main():
