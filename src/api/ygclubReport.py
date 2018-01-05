@@ -55,7 +55,7 @@ def query_user_basic_info(username):
 
 #get ygclub activity statistics
 def get_ygclub_act_data(uid):
-	sql = "SELECT pe.uid, pe.username, pe.config, pe.checkin, p.class, p.tid, p.ctid, p.showtime, t.subject  FROM "
+	sql = "SELECT pe.uid, pe.username, pe.config, pe.checkin, p.class, p.tid, p.ctid, p.showtime, t.subject, pe.usertask  FROM "
 	sql = sql +"bbs_ygclub_partyers as pe LEFT JOIN bbs_ygclub_party as p on pe.tid = p.tid "
 	sql = sql +"LEFT JOIN bbs_forum_thread as t on p.tid = t.tid where 1 "
 	sql = sql +"AND pe.uid = '"+str(uid)+"' "
@@ -76,9 +76,17 @@ def get_ygclub_act_data(uid):
 	school_date = "" #第一次活动时间
 	px_date = "" #第一次培训时间
 	service_schools = []
+	zhujiang_count = 0
+	first_zhujiang_date = ""
+	first_zhujiang_school = ""
 	for item in res:
 		print u'"'+str(item[3])+" "+item[4]+" "+item[8]+" "+timestamp_to_date(item[7])+'"'
 		#get first school activity
+		if u'主讲' in u''+item[9]+'':
+			if first_zhujiang_date == "":
+				first_zhujiang_date = timestamp_to_date(item[7])
+				first_zhujiang_school = u''+get_school_name(item[8])+''
+			zhujiang_count = zhujiang_count + 1
 		if u'【活动召集】' in u''+item[8]+'' and u'阳光公益活动' in u''+item[4]+'' and school_name == "":
 			school_name = u''+get_school_name(item[8])+''
 			school_date = timestamp_to_date(item[7])
@@ -104,6 +112,8 @@ def get_ygclub_act_data(uid):
 	yghd_endtime = timestamp_to_date(res[len(res)-1][7])
 	kids_count = ygkt_count * 12
 	teach_plan_count = ygkt_count/2
+	jiaoan_count = zhujiang_count
+	infos = {}
 	count_data = {"ygkt_count":ygkt_count,"yglh_count":yglh_count,"ygpx_count":ygpx_count,"ygxx_count":ygxx_count,"ygwb_count":ygwb_count,"yghd_count":yghd_count,"kids_count":kids_count,"teach_plan_count":teach_plan_count}
 	print count_data
 	time_data = {"ygkt_hour":ygkt_hour_count,"yghd_starttime":yghd_starttime,"yghd_endtime":yghd_endtime}
@@ -112,8 +122,9 @@ def get_ygclub_act_data(uid):
 	print json.dumps(first_activity, encoding="UTF-8", ensure_ascii=False)
 	serice_school_info = {"school_count":len(service_schools),"school_list":service_schools}
 	print json.dumps(serice_school_info, encoding="UTF-8", ensure_ascii=False)
-	return first_activity
-
+	zhujiang_info = {"first_zhujiang_date":first_zhujiang_date,"first_zhujiang_school":first_zhujiang_school,"zhujiang_count":zhujiang_count,"jiaoan_count":jiaoan_count}
+	print json.dumps(zhujiang_info, encoding="UTF-8", ensure_ascii=False)
+	return infos
 
 def get_school_name(data):
 	project = ""
