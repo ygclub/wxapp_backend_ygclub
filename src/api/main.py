@@ -28,20 +28,25 @@ def curtime():
 	return {"time": "2015-06-22 12:00"}
 
 
-@route('/v1/px_ygclub_report',methods=['POST'])
+@route('/v1/px_ygclub_report',methods=['GET','POST'])
 @api
 def get_ygclub_report_proxy():
 	logger.debug("get ygclub report [proxy]")
-	req_form = request.form
-	username = req_form["username"]
+	username = request.args.get("username")
+	logger.debug(username)
+	if username is None:
+		req_form = request.form
+		username = req_form["username"]
+	if username is None:
+		return {"status":"fail"}
 	url = "http://squirrel.ygclub.org/v1/ygclub_report"
 	headers = {'content-type': 'application/json'}
 	data = {"username":username}
 	logger.debug(data)
 	logger.debug(url)
 	r = requests.post(url, data=json.dumps(data), headers=headers)
-	lgoger.debug(r)
-	return r
+	logger.debug(r.text)
+	return json.loads(r.text)
 
 @route('/v1/ygclub_report',methods=['POST'])
 @api
