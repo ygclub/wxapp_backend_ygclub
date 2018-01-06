@@ -55,10 +55,10 @@ def query_user_basic_info(username):
 
 
 #query tong qi sheng
-def get_tongqisheng(date):
+def get_tongqisheng(date,username):
 	min_date = date - 2678400 #30天范围
 	max_date = date + 2678400
-	sql = "select username from bbs_common_member where regdate >= "+str(min_date)+" and regdate <= "+str(max_date)
+	sql = "select username from bbs_common_member where username != '"+username+"' and regdate >= "+str(min_date)+" and regdate <= "+str(max_date)
 	res = execute_db_query(sql)
 	max_count = 8
 	tongqisheng = []
@@ -74,7 +74,7 @@ def get_tongqisheng(date):
 
 #get ygclub activity statistics
 def get_ygclub_act_data(user):
-	print user["username"]+"的阳光公益报告"
+	#print user["username"]+"的阳光公益报告"
 	uid = user["uid"]
 	sql = "SELECT pe.uid, pe.username, pe.config, pe.checkin, p.class, p.tid, p.ctid, p.showtime, t.subject, pe.usertask  FROM "
 	sql = sql +"bbs_ygclub_partyers as pe LEFT JOIN bbs_ygclub_party as p on pe.tid = p.tid "
@@ -145,7 +145,7 @@ def get_ygclub_act_data(user):
 	#print json.dumps(serice_school_info, encoding="UTF-8", ensure_ascii=False)
 	zhujiang_info = {"first_zhujiang_date":first_zhujiang_date,"first_zhujiang_school":first_zhujiang_school,"zhujiang_count":zhujiang_count,"jiaoan_count":jiaoan_count}
 	#print json.dumps(zhujiang_info, encoding="UTF-8", ensure_ascii=False)
-	tongqisheng = get_tongqisheng(user['regdate_timestamp'])
+	tongqisheng = get_tongqisheng(user['regdate_timestamp'],user['username'])
 	#tongqisheng_info = {"tongqisheng":tongqisheng}
 	#print json.dumps(tongqisheng_info, encoding="UTF-8", ensure_ascii=False)
 	infos = {"count":count_data,"time":time_data,"school":serice_school_info,"first_info":first_activity,"zhujiang_info":zhujiang_info,"tongqisheng":tongqisheng}
@@ -166,6 +166,6 @@ def get_report(username):
 		return
 	info = get_ygclub_act_data(user)
 	data = {"user":user,"detail":info}
-	print json.dumps(data, encoding="UTF-8", ensure_ascii=False)
+	#print json.dumps(data, encoding="UTF-8", ensure_ascii=False)
 	return data
 #get_report("squirrelRao")

@@ -42,10 +42,10 @@ def get_ygclub_report_proxy():
 	url = "http://squirrel.ygclub.org/v1/ygclub_report"
 	headers = {'content-type': 'application/json'}
 	data = {"username":username}
-	logger.debug(data)
-	logger.debug(url)
+	#logger.debug(data)
+	#logger.debug(url)
 	r = requests.post(url, data=json.dumps(data), headers=headers)
-	logger.debug(r.text)
+	#logger.debug(r.text)
 	return json.loads(r.text)
 
 @route('/v1/ygclub_report',methods=['POST'])
@@ -59,7 +59,7 @@ def get_ygclub_report():
 	report = get_report(username)
 	response = {"status":"OK","result":report}
 	report_dumps =  json.dumps(response, encoding="UTF-8", ensure_ascii=False)
-	logger.debug("username's ygclub report:"+report_dumps)
+	#logger.debug("username's ygclub report:"+report_dumps)
 	return response
 	
 
