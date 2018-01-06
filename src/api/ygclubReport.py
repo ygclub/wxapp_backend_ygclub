@@ -60,9 +60,9 @@ def get_tongqisheng(date):
 	max_date = date + 2678400
 	sql = "select username from bbs_common_member where regdate >= "+str(min_date)+" and regdate <= "+str(max_date)
 	res = execute_db_query(sql)
-	max_count = 4
+	max_count = 8
 	tongqisheng = []
-	if len(res) <= 4:
+	if len(res) <= max_count:
 		return res
 	i = 0
 	while i < max_count:
@@ -146,9 +146,9 @@ def get_ygclub_act_data(user):
 	zhujiang_info = {"first_zhujiang_date":first_zhujiang_date,"first_zhujiang_school":first_zhujiang_school,"zhujiang_count":zhujiang_count,"jiaoan_count":jiaoan_count}
 	#print json.dumps(zhujiang_info, encoding="UTF-8", ensure_ascii=False)
 	tongqisheng = get_tongqisheng(user['regdate_timestamp'])
-	tongqisheng_info = {"tongqisheng":tongqisheng}
+	#tongqisheng_info = {"tongqisheng":tongqisheng}
 	#print json.dumps(tongqisheng_info, encoding="UTF-8", ensure_ascii=False)
-	infos = {"count":count_data,"time":time_data,"school":serice_school_info,"first_info":first_activity,"zhujiang_info":zhujiang_info,"tongqisheng":tongqisheng_info}
+	infos = {"count":count_data,"time":time_data,"school":serice_school_info,"first_info":first_activity,"zhujiang_info":zhujiang_info,"tongqisheng":tongqisheng}
 	return infos
 
 
