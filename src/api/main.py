@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 import time
+import requests
 from flask import Flask
 from flask import request
 from logging.handlers import TimedRotatingFileHandler
@@ -27,12 +28,29 @@ def curtime():
 	return {"time": "2015-06-22 12:00"}
 
 
+@route('/v1/px_ygclub_report',methods=['POST'])
+@api
+def get_ygclub_report_proxy():
+	logger.debug("get ygclub report [proxy]")
+	req_form = request.form
+	username = req_form["username"]
+	url = "http://squirrel.ygclub.org/v1/ygclub_report"
+	headers = {'content-type': 'application/json'}
+	data = {"username":username}
+	logger.debug(data)
+	logger.debug(url)
+	r = requests.post(url, data=json.dumps(data), headers=headers)
+	lgoger.debug(r)
+	return r
+
 @route('/v1/ygclub_report',methods=['POST'])
 @api
 def get_ygclub_report():
 	logger.debug("get ygclub report")
-	req_form = request.form
-	username = req_form["username"]
+	data = request.get_data()
+	logger.debug(data)
+	param = json.loads(data)
+	username = param["username"]
 	report = get_report(username)
 	response = {"status":"OK","result":report}
 	report_dumps =  json.dumps(response, encoding="UTF-8", ensure_ascii=False)
