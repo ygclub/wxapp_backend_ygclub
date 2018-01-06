@@ -6,3 +6,4 @@ pylint
 profilehooks
 Flask-MySQL
 PyMySQL
+mysql-python

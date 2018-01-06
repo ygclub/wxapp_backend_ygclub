@@ -9,6 +9,8 @@ from logging.handlers import TimedRotatingFileHandler
 from util import api
 from caiyun.platform.redis_client import client as rc
 from caiyun.platform.mongo_client import client as mongo_client
+from ygclubReport import get_report
+import json
 
 application = Flask(__name__)
 route = application.route
@@ -24,6 +26,19 @@ def index():
 def curtime():
 	return {"time": "2015-06-22 12:00"}
 
+
+@route('/v1/ygclub_report',methods=['POST'])
+@api
+def get_ygclub_report():
+	logger.debug("get ygclub report")
+	req_form = request.form
+	username = req_form["username"]
+	report = get_report(username)
+	response = {"status":"OK","result":report}
+	report_dumps =  json.dumps(response, encoding="UTF-8", ensure_ascii=False)
+	logger.debug("username's ygclub report:"+report_dumps)
+	return response
+	
 
 @route('/v1/banner')
 @api

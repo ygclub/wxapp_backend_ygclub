@@ -136,18 +136,19 @@ def get_ygclub_act_data(user):
 	jiaoan_count = zhujiang_count
 	infos = {}
 	count_data = {"ygkt_count":ygkt_count,"yglh_count":yglh_count,"ygpx_count":ygpx_count,"ygxx_count":ygxx_count,"ygwb_count":ygwb_count,"yghd_count":yghd_count,"kids_count":kids_count,"teach_plan_count":teach_plan_count}
-	print count_data
+	#print count_data
 	time_data = {"ygkt_hour":ygkt_hour_count,"yghd_starttime":yghd_starttime,"yghd_endtime":yghd_endtime}
-	print time_data
+	#print time_data
 	first_activity = {"school_name":school_name,"school_date":school_date,"train_date":px_date}
-	print json.dumps(first_activity, encoding="UTF-8", ensure_ascii=False)
+	#print json.dumps(first_activity, encoding="UTF-8", ensure_ascii=False)
 	serice_school_info = {"school_count":len(service_schools),"school_list":service_schools}
-	print json.dumps(serice_school_info, encoding="UTF-8", ensure_ascii=False)
+	#print json.dumps(serice_school_info, encoding="UTF-8", ensure_ascii=False)
 	zhujiang_info = {"first_zhujiang_date":first_zhujiang_date,"first_zhujiang_school":first_zhujiang_school,"zhujiang_count":zhujiang_count,"jiaoan_count":jiaoan_count}
-	print json.dumps(zhujiang_info, encoding="UTF-8", ensure_ascii=False)
+	#print json.dumps(zhujiang_info, encoding="UTF-8", ensure_ascii=False)
 	tongqisheng = get_tongqisheng(user['regdate_timestamp'])
 	tongqisheng_info = {"tongqisheng":tongqisheng}
-	print json.dumps(tongqisheng_info, encoding="UTF-8", ensure_ascii=False)
+	#print json.dumps(tongqisheng_info, encoding="UTF-8", ensure_ascii=False)
+	infos = {"count":count_data,"time":time_data,"school":serice_school_info,"first_info":first_activity,"zhujiang_info":zhujiang_info,"tongqisheng":tongqisheng_info}
 	return infos
 
 
@@ -158,13 +159,13 @@ def get_school_name(data):
 			project = item
 	return project
 
-def main():
-	username = "wycjw1990"
+def get_report(username):
 	user = query_user_basic_info(username)
 	if user == False:
 		print "no user find by "+username
 		return
-	acts = get_ygclub_act_data(user)
-
-
-main()
+	info = get_ygclub_act_data(user)
+	data = {"user":user,"detail":info}
+	print json.dumps(data, encoding="UTF-8", ensure_ascii=False)
+	return data
+#get_report("squirrelRao")
