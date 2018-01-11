@@ -99,7 +99,7 @@ def get_ygclub_act_data(user):
 	service_schools = []
 	zhujiang_count = 0
 	first_zhujiang_date = ""
-	first_zhujiang_school = ""
+	first_zhujiang_school = "那天"
 	for item in res:
 		#print u'"'+str(item[3])+" "+item[4]+" "+item[8]+" "+timestamp_to_date(item[7])+'"'
 		#get first school activity
@@ -107,6 +107,8 @@ def get_ygclub_act_data(user):
 			if first_zhujiang_date == "":
 				first_zhujiang_date = timestamp_to_date(item[7])
 				first_zhujiang_school = u''+get_school_name(item[8])+''
+				if first_zhujiang_school == "":
+					first_zhujiang_school = "那天"
 			zhujiang_count = zhujiang_count + 1
 		if u'【活动召集】' in u''+item[8]+'' and u'阳光公益活动' in u''+item[4]+'' and school_name == "":
 			school_name = u''+get_school_name(item[8])+''
