@@ -12,6 +12,7 @@ from caiyun.platform.redis_client import client as rc
 from caiyun.platform.mongo_client import client as mongo_client
 from ygclubReport import get_report
 import json
+import hashlib
 
 application = Flask(__name__)
 route = application.route
@@ -27,6 +28,46 @@ def index():
 def curtime():
 	return {"time": "2015-06-22 12:00"}
 
+
+@route('/v1/get_token',methods=['GET'])
+@api
+def get_token():
+	url = request.args.get("url")
+	db = mongo_client.lead
+	weixin = db.weixin_sign
+	res = weixin.find({"sign":"weixin_sign"})
+	appid = ""
+	signature = ""
+	nonce = ""
+	timestamp = ""
+	now = time.time()
+	for item in res:
+		appid = item["appid"]
+		appsecret = item["appsecret"]
+		update_time = item["update_time"]
+		access_token = ""
+		ticket = ""
+		token_expire = False
+		if now - update_time > 7200 or "access_token" not in item:
+			token_expire = True
+		else:	
+			token_expire = False
+			access_token = item["access_token"]
+			ticket = item["jsapi_ticket"]
+			timestamp = item["timestamp"]
+		result = gen_wx_sign(appid,access_token,ticket,timestamp,appsecret,url,token_expire)
+		return {"appid":appid,"signature":result[0],"nonce":result[1],"timestamp":result[2]}	
+
+@route('/v1/api/wtoken',methods=['GET'])
+def weixin_token():
+	signature = request.args.get("signature")
+	echostr = request.args.get("echostr")
+	timestamp = request.args.get("timestamp")
+	nonce = request.args.get("nonce")
+	db = mongo_client.lead
+	weixin = db.weixin_sign
+	weixin.update({"sign":"weixin_sign"},{"$set":{"appid":"wxb800c89d76589d1f","appsecret":"da3880dc648872b7749f8635d3a4c2a5","signature":signature,"echostr":echostr,"timestamp":timestamp,"nonce":nonce,"update_time":0,"time":time.time()}},upsert=True)
+	return echostr
 
 @route('/v1/px_ygclub_report',methods=['GET','POST'])
 @api
@@ -47,6 +88,33 @@ def get_ygclub_report_proxy():
 	r = requests.post(url, data=json.dumps(data), headers=headers)
 	#logger.debug(r.text)
 	return json.loads(r.text)
+
+
+def gen_wx_sign(appid,access_token,ticket,timestamp,appsecret,url,token_expire):
+	noncestr = "ygclub"
+	if token_expire == True:
+		#get access token
+		get_access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appid+"&secret="+appsecret
+		r = requests.get(get_access_token_url)
+		res = json.loads(r.text)
+		logger.debug(res)
+		access_token = res["access_token"]
+		#get ticket
+		get_ticket_url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+access_token+"&type=jsapi"
+		r = requests.get(get_ticket_url)
+		res = json.loads(r.text)
+		ticket = res["ticket"]
+		logger.debug(res)
+		#gen signatrue
+		timestamp = str(time.time())
+	sign_str = "jsapi_ticket="+ticket+"&noncestr="+noncestr+"&timestamp="+timestamp+"&url="+url
+	logger.debug(sign_str)
+	signature = hashlib.sha1(sign_str).hexdigest()
+	logger.debug(signature)
+	db = mongo_client.lead
+	weixin = db.weixin_sign
+	weixin.update({"sign":"weixin_sign"},{"$set":{"access_token":access_token,"jsapi_ticket":ticket,"noncestr":noncestr,"signature":signature,"timestamp":timestamp,"update_time":time.time()}})
+	return [signature,noncestr,timestamp]
 
 @route('/v1/ygclub_report',methods=['POST'])
 @api
