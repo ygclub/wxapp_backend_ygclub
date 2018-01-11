@@ -33,6 +33,7 @@ def curtime():
 @api
 def get_token():
 	url = request.args.get("url")
+	refresh = request.args.get("refresh")
 	db = mongo_client.lead
 	weixin = db.weixin_sign
 	res = weixin.find({"sign":"weixin_sign"})
@@ -48,14 +49,15 @@ def get_token():
 		access_token = ""
 		ticket = ""
 		token_expire = False
-		if now - update_time > 7200 or "access_token" not in item:
+		if now - update_time >= 7000 or "access_token" not in item:
 			token_expire = True
 		else:	
 			token_expire = False
 			access_token = item["access_token"]
 			ticket = item["jsapi_ticket"]
-			timestamp = item["timestamp"]
-		result = gen_wx_sign(appid,access_token,ticket,timestamp,appsecret,url,token_expire)
+		if refresh == "1":
+			token_expire = True
+		result = gen_wx_sign(appid,access_token,ticket,appsecret,url,token_expire)
 		return {"appid":appid,"signature":result[0],"nonce":result[1],"timestamp":result[2]}	
 
 @route('/v1/api/wtoken',methods=['GET'])
@@ -90,8 +92,9 @@ def get_ygclub_report_proxy():
 	return json.loads(r.text)
 
 
-def gen_wx_sign(appid,access_token,ticket,timestamp,appsecret,url,token_expire):
+def gen_wx_sign(appid,access_token,ticket,appsecret,url,token_expire):
 	noncestr = "ygclub"
+	logger.debug("gen wx sign, token expire"+str(token_expire))
 	if token_expire == True:
 		#get access token
 		get_access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appid+"&secret="+appsecret
@@ -105,15 +108,15 @@ def gen_wx_sign(appid,access_token,ticket,timestamp,appsecret,url,token_expire):
 		res = json.loads(r.text)
 		ticket = res["ticket"]
 		logger.debug(res)
+		db = mongo_client.lead
+        	weixin = db.weixin_sign
+		weixin.update({"sign":"weixin_sign"},{"$set":{"access_token":access_token,"jsapi_ticket":ticket,"update_time":time.time()}})
 		#gen signatrue
-		timestamp = str(time.time())
+	timestamp = str(time.time())
 	sign_str = "jsapi_ticket="+ticket+"&noncestr="+noncestr+"&timestamp="+timestamp+"&url="+url
 	logger.debug(sign_str)
 	signature = hashlib.sha1(sign_str).hexdigest()
 	logger.debug(signature)
-	db = mongo_client.lead
-	weixin = db.weixin_sign
-	weixin.update({"sign":"weixin_sign"},{"$set":{"access_token":access_token,"jsapi_ticket":ticket,"noncestr":noncestr,"signature":signature,"timestamp":timestamp,"update_time":time.time()}})
 	return [signature,noncestr,timestamp]
 
 @route('/v1/ygclub_report',methods=['POST'])
